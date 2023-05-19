@@ -91,7 +91,7 @@
                 tbl_cita.apellido,
                 tbl_cita.identidad,
                 tbl_horario_consulado.horaFinal AS horaAtencion,
-                tbl_cita.estado,
+                tbl_cita.estado AS estado,
                 tbl_usuario.nombre AS agente
             FROM
                 tbl_cita
@@ -123,6 +123,18 @@
                             <tbody>';
 
         foreach ($results as $row) {
+          if ($row['estado'] == 1) {
+            $row['estado'] = "Atendido";
+          } else if ($row['estado'] == 19) {
+            $row['estado'] = "No se Presento";
+          } else if ($row['estado'] == 23) {
+            $row['estado'] = "Cancelado";
+          } else if ($row['estado'] == 24) {
+            $row['estado'] = "Reprogramado";
+          } else {
+            $row['estado'] = "Pendiente";
+          }
+          echo '<h1>' . $row['estado'] . '</h1>';
 
           echo '<tr>
                             <th>Numero Del Caso:</th>
@@ -160,7 +172,7 @@
                           </tr>';
 
           echo '<tr>
-                            <th>Identidad</th>
+                            <th>Identidad:</th>
                             <td>' . $row['identidad'] . '</td>
                           </tr>';
 
