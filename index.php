@@ -16,6 +16,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
+      height: 100vh;
       height: 40vh;
     }
 
@@ -54,7 +55,7 @@
         <form method="post" onsubmit="return validateForm()">
           <div class="form-group">
             <label for="numbersInput"></label>
-            <input type="text" class="form-control" id="identidad" name="identidad" placeholder="Número de Identidad">
+            <input type="text" class="form-control" id="identidad" name="identidad" placeholder="Número de Identidad" onkeydown="limitInput(event)">
           </div>
           <button type="submit" class="btn btn-primary">Buscar</button>
         </form>
@@ -116,9 +117,6 @@
       if ($results) {
         // Display the user information in a table
         echo '<div class="container">
-                <div class="print_button_container">
-                 <button type="button" class="btn btn-secondary" onclick="printTable()"><i class="fas fa-print"></i></button>
-                </div>
                         <table class="table table-striped">
                             <tbody>';
 
@@ -186,78 +184,53 @@
 
   <!-- Bootstrap JS -->
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script src="https://kit.fontawesome.com/a076d05399.js"></script>
   <script>
-    function validateForm() {
-      var identidadInput = document.getElementById('identidad');
-      var identidadValue = identidadInput.value.trim();
+    function validateForm(event) {
+      // Prevent form submission
+      event.preventDefault();
 
-      // Remove non-numeric characters
-      identidadValue = identidadValue.replace(/\D/g, '');
-      identidadInput.value = identidadValue;
+      // Validation code...
+      var inputField = document.getElementById('identidad');
+      var identidadValue = inputField.value;
 
-      // Validate length
-      if (identidadValue.length !== 12) {
-        identidadInput.classList.add('is-invalid');
+      if (!/^\d{0,12}$/.test(identidadValue)) {
+        alert('La identidad debe ser un número de hasta 12 dígitos.');
         return false;
       }
-
-      identidadInput.classList.remove('is-invalid');
-      return true;
     }
 
-    // Allow only numeric input (including 10-key number pad) and limit to 12 characters
-    document.getElementById('identidad').addEventListener('keydown', function(event) {
-      var allowedKeys = [8, 9, 37, 39, 46]; // Backspace, Tab, Left Arrow, Right Arrow, Delete
+    // Add keydown event listener to limit the input length
+    function limitInput(event) {
+      var inputField = document.getElementById('identidad');
+      var identidadValue = inputField.value;
 
-      // Allow numeric keys from 10-key number pad
-      var numberPadKeys = [96, 97, 98, 99, 100, 101, 102, 103, 104, 105];
-      allowedKeys = allowedKeys.concat(numberPadKeys);
-
-      if (allowedKeys.indexOf(event.keyCode) !== -1) {
-        return; // Allow navigation and deletion keys
+      if (identidadValue.length >= 12 && event.keyCode !== 8 && event.keyCode !== 46) {
+        event.preventDefault();
       }
+    }
 
-      if (event.keyCode < 48 || event.keyCode > 57) {
-        event.preventDefault(); // Prevent input of non-numeric characters
-      }
-
-      var identidadInput = document.getElementById('identidad');
-      var identidadValue = identidadInput.value.trim();
-
-      // Limit to 12 characters
-      if (identidadValue.length >= 12) {
+    // Enable Alt + C for copy functionality
+    window.addEventListener('keydown', function(event) {
+      if (event.altKey && event.code === 'KeyC') {
         event.preventDefault();
       }
     });
 
-    // Prevent pasting non-numeric characters
-    document.getElementById('identidad').addEventListener('input', function(event) {
-      var identidadInput = event.target;
-      var identidadValue = identidadInput.value.trim();
-      identidadValue = identidadValue.replace(/\D/g, '');
-      identidadInput.value = identidadValue;
-
-      // Limit to 12 characters
-      if (identidadValue.length > 12) {
-        identidadInput.value = identidadValue.slice(0, 12);
+    // Enable Alt + A functionality
+    window.addEventListener('keydown', function(event) {
+      if (event.altKey && event.code === 'KeyA') {
+        event.preventDefault();
       }
     });
-  </script>
 
-  <script>
-    function printTable() {
-      document.querySelector('.navbar').style.display = 'none';
-      document.querySelector('.col-md-6').style.display = 'none';
-
-      window.print();
-
-      document.querySelector('.navbar').style.display = 'block';
-      document.querySelector('.col-md-6').style.display = 'block';
-    }
+    // Enable Ctrl + V functionality (paste command)
+    window.addEventListener('keydown', function(event) {
+      if (event.ctrlKey && event.code === 'KeyV') {
+        event.preventDefault();
+      }
+    });
   </script>
 </body>
 
 </html>
-
-
-<!-- 1701198801689 -->
