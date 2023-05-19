@@ -5,6 +5,8 @@
   <title>Result</title>
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <!-- Fontawesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
   <style>
     .form-group {
       margin-bottom: 1rem;
@@ -115,7 +117,7 @@
         // Display the user information in a table
         echo '<div class="container">
                 <div class="print_button_container">
-                 <button type="button" class="btn btn-secondary" onclick="printTable()">Imprimir</button>
+                 <button type="button" class="btn btn-secondary" onclick="printTable()"><i class="fas fa-print"></i></button>
                 </div>
                         <table class="table table-striped">
                             <tbody>';
