@@ -16,3 +16,9 @@
 .btn-secondary {
     margin-bottom: 20px;
 }
+
+.back_button_container {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 10px;
+}
