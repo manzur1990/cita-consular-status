@@ -1,0 +1,18 @@
+.form-group {
+    margin-bottom: 1rem;
+}
+
+.center-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 40vh;
+}
+
+.form-container {
+    margin-bottom: 20px;
+}
+
+.btn-secondary {
+    margin-bottom: 20px;
+}
